@@ -1,17 +1,23 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Write a short comment describing this function
+## makecacheMatrix builds a list of functions  
 
 makeCacheMatrix <- function(x = matrix()) {
         inv <- NULL
+        #input a  new matrix by calling $set on the object
         set <- function(y) {
                 x <<- y
+                #put inverse back to null
                 inv <<- NULL
         }
+        #retrieve value of matrix
         get <- function() x
+        #set inverse in cache
         setInv <- function(inverse) inv <<- inverse
+        #retrieve inverse from cache
         getInv <- function() inv
+        #return list of functions
         list(set = set, get = get,
              setInv = setInv,
              getInv = getInv)
@@ -19,7 +25,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+# cacheSolve function takes an argument x (makeCacheMatrix object) and checks if it was already calculated by calling
+# getInv(). If cache has a value stored, the cacheSolve function returns 
 
 cacheSolve <- function(x, ...) {
        
@@ -32,12 +39,14 @@ cacheSolve <- function(x, ...) {
                 return(inv)
         }
         
-        #get input
+        #if matrix inverse isn't cached, get matrix object
         data <- x$get()
        
-        #
+        # compute matrix inverse
         inv <- solve(data, ...)
+        # set computation in cache object
         x$setInv(inv)
+        # return inverse of matrix
         inv
         
 }
